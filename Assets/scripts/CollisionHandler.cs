@@ -10,7 +10,6 @@ public class CollisionHandler : MonoBehaviour
     void Awake()
     {
         saber = GameObject.FindGameObjectWithTag("GameController").GetComponent<Saber>();
-
     }
 
     void Start()
@@ -18,37 +17,18 @@ public class CollisionHandler : MonoBehaviour
         gamePuntaje = GameObject.FindWithTag("score");
     }
 
-    void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        // Debug.Log("leavingtrigger");
-
-        this.GetComponent<Renderer>().material.color = Color.blue;
-        Destroy(gameObject);
+        GetComponent<Renderer>().material.color = Color.blue;
 
         saber.laserLogic.score += 1;
 
         gamePuntaje.GetComponent<TextMesh>().text = saber.laserLogic.score.ToString();
-        //TO DO
-        //destruir objeto en la cola 
-
-
-        /*  if (other.name == "Detection Zone")
-          {
-              inSight = true;
-          }
-  */
+ 
     }
 
-    void OnCollisionExit(Collision other)
+    private void OnTriggerExit(Collider other)
     {
-        // Debug.Log("leavingtrigger");
-
-        /*
-        if (other.name == "Detection Zone")
-        {
-            Debug.Log("leavingtrigger");
-            inSight = false;
-            Debug.Log("not in sight");
-        }*/
+        Destroy(gameObject);
     }
 }

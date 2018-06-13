@@ -1,41 +1,36 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Laser2D
+public class Cube
 {
-    public class Cube
+    public static GameObject CreateCube(String side)
     {
-        public char Direction { get; }
-        public GameObject CubeObject { get; set; }
+        char direction;
+        System.Random rnd = new System.Random();
+        int dir = rnd.Next(0, 4);
+        if (dir == 0)
+            direction = 'u';
+        else if (dir == 1)
+            direction = 'l';
+        else if (dir == 2)
+            direction = 'd';
+        else
+            direction = 'r';
 
-        public Cube()
-        {
-            
-            System.Random rnd = new System.Random();
-            int dir = rnd.Next(0, 4);
-            if (dir == 0)
-                Direction = 'u';
-            else if (dir == 1)
-                Direction = 'l';
-            else if (dir == 2)
-                Direction = 'd';
-            else
-                Direction = 'r';
+        // TODO: añadir dirección
 
+        // Create 3d object
+        GameObject newCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-            // Create 3d object
-            CubeObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        newCube.AddComponent<Rigidbody>().useGravity = false;
+        newCube.GetComponent<BoxCollider>().isTrigger = true;
+        newCube.AddComponent<CollisionHandler>();
+        newCube.AddComponent<CubeScript>();
 
-            // CubeObject.AddComponent<BoxCollider>();
-            // CubeObject.AddComponent<Rigidbody>();
-            CubeObject.AddComponent<CollisionHandler>();
-        }
+        // Si el cubo es del lado izquierdo, entonces se posiciona ahí 
+        if (side.Equals("left"))
+            newCube.transform.position = new Vector3(5, 0, 0);
 
-        public Cube(char direction)
-        {
-            Direction = direction;
-            CubeObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        }
-
+        return newCube;
     }
 }
