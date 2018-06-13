@@ -5,11 +5,8 @@ namespace Laser2D
 {
     public class Cube
     {
-        public long TimeStamp { get; }
         public char Direction { get; }
         public GameObject CubeObject { get; set; }
-
-        private LaserLogic laserLogic;
 
         public Cube()
         {
@@ -25,10 +22,10 @@ namespace Laser2D
             else
                 Direction = 'r';
 
-            TimeStamp = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 
             // Create 3d object
             CubeObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
             // CubeObject.AddComponent<BoxCollider>();
             // CubeObject.AddComponent<Rigidbody>();
             CubeObject.AddComponent<CollisionHandler>();
@@ -37,13 +34,8 @@ namespace Laser2D
         public Cube(char direction)
         {
             Direction = direction;
-            TimeStamp = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
             CubeObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
         }
 
-        public long DiffTime()
-        {
-            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - TimeStamp;
-        }
     }
 }

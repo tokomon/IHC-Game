@@ -13,19 +13,24 @@ public class Saber : MonoBehaviour
     public static Material matPared;
 
     public LaserLogic laserLogic;
-    public System.Random rnd = new System.Random();
 
-    static void UpdateObjects(LaserLogic logic)
+    static void UpdateObjectsLeft(LaserLogic logic)
     {
         foreach (Cube cube in logic.CubesLeft)
         {
             // actualiza la posición de un cubo
-            cube.CubeObject.transform.Translate(0, 0, logic.Speed * Time.deltaTime);
+            if (cube.CubeObject != null)
+                cube.CubeObject.transform.Translate(0, 0, logic.Speed * Time.deltaTime);
         }
+    }
+
+    static void UpdateObjectsRight(LaserLogic logic)
+    {
         foreach (Cube cube in logic.CubesRight)
         {
             // actualiza la posición de un cubo
-            cube.CubeObject.transform.Translate(0, 0, logic.Speed * Time.deltaTime);
+            if (cube.CubeObject != null)
+                cube.CubeObject.transform.Translate(0, 0, logic.Speed * Time.deltaTime);
         }
     }
 
@@ -38,53 +43,65 @@ public class Saber : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        long elapsedTime;
-        int pos;
-        if (laserLogic.CubesLeft.Count != 0)
-        {
-            elapsedTime = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - laserLogic.CubesLeft.Peek().TimeStamp;
-            // TODO: en lugar de esto usar la posición del cubo 
-            pos = (int)(laserLogic.Speed * elapsedTime / 1000f);
-            if (pos < 15)
-            {
-                UpdateObjects(laserLogic);
-            }
-            else
-            {
-                //objects.Peek().GetComponent<Renderer>().material = matPisoE;
-                if (laserLogic.CubesLeft.Peek().CubeObject != null)
-                    Destroy(laserLogic.CubesLeft.Peek().CubeObject);
-                laserLogic.RemoveLeft();
-            }
+        ProcessLeft();
+        ProcessRight();
 
-        }
-
-        if (laserLogic.CubesRight.Count != 0)
-        {
-            elapsedTime = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - laserLogic.CubesRight.Peek().TimeStamp;
-            pos = (int)(laserLogic.Speed * elapsedTime / 1000f);
-            if (pos < 15)
-            {
-                UpdateObjects(laserLogic);
-            }
-            else
-            {
-                //objects.Peek().GetComponent<Renderer>().material = matPisoE;
-
-                if (laserLogic.CubesRight.Peek().CubeObject != null)
-                    Destroy(laserLogic.CubesRight.Peek().CubeObject);
-                laserLogic.RemoveRight();
-            }
-        }
-
-        if (rnd.Next(3) == 2)
-            laserLogic.TryToAddCube();
+        laserLogic.TryToAddCube();
 
         if (laserLogic.score > 10 && laserLogic.score % 10 == 0)
-        {
             laserLogic.IncreaseSpeed();
+    }
+
+    void ProcessLeft()
+    {
+        if (laserLogic.CubesLeft.Count == 0)
+            return;
+
+        GameObject cubeObject = laserLogic.CubesLeft.Peek().CubeObject;
+
+        // Si el CubeObject es nulo, significa que ya ha sido eliminado en la colisión.
+        if (cubeObject == null)
+        {
+            Debug.Log("YA SE DESTRUYO LEFT");
+            laserLogic.RemoveLeft();
+            return;
         }
 
+        float pos = cubeObject.transform.position.z;
+        if (pos < 15.0f)
+            UpdateObjectsLeft(laserLogic);
+        else
+        { // Si su posición en mayor o igual que 15, ha pasado el límite y se debe descontar una vida.
+            if (cubeObject != null)
+                Destroy(cubeObject);
+            laserLogic.RemoveLeft();
+            // TODO: descontar vida.
+        }
+    }
+
+    void ProcessRight()
+    {
+        if (laserLogic.CubesRight.Count == 0)
+            return;
+
+        GameObject cubeObject = laserLogic.CubesRight.Peek().CubeObject;
+        // Si el CubeObject es nulo, significa que ya ha sido eliminado en la colisión.
+        if (cubeObject == null)
+        {
+            Debug.Log("YA SE DESTRUYO RIGHT");
+            laserLogic.RemoveRight();
+            return;
+        }
+
+        float pos = cubeObject.transform.position.z;
+        if (pos < 15.0f)
+            UpdateObjectsRight(laserLogic);
+        else
+        {
+            if (cubeObject != null)
+                Destroy(cubeObject);
+            laserLogic.RemoveRight();
+        }
     }
 
     IEnumerator ExecuteAfterTime(float time)

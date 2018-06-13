@@ -9,8 +9,8 @@ namespace Laser2D
         public Queue<Cube> CubesRight { get; }
         public float CubeSize { get; }
         public float Speed { get; set; }
-        long LastCubeTimeLeft;
-        long LastCubeTimeRight;
+        Cube LastCubeLeft;
+        Cube LastCubeRight;
 
         public int score;
 
@@ -22,7 +22,7 @@ namespace Laser2D
             CubeSize = 1.0f;
             Speed = speed;
 
-            LastCubeTimeLeft = LastCubeTimeRight = 0;
+            LastCubeLeft = LastCubeRight = null;
 
             score = 0;
         }
@@ -30,6 +30,8 @@ namespace Laser2D
         public void TryToAddCube()
         {
             Random rnd = new Random();
+            if (rnd.Next(3) != 2)
+                return;
             bool left = CheckLastLeft();
             bool right = CheckLastRight();
 
@@ -40,15 +42,8 @@ namespace Laser2D
                 int doubleProb = rnd.Next(100);
                 if (doubleProb < 5) // 30
                 {
-
-                    Cube cube = new Cube();
-                    cube.CubeObject.transform.position = new UnityEngine.Vector3(5,0,0);
-                    CubesLeft.Enqueue(cube);
-                    LastCubeTimeLeft = cube.TimeStamp;
-
-                    cube = new Cube();
-                    CubesRight.Enqueue(cube);
-                    LastCubeTimeRight = cube.TimeStamp;
+                    AddLeftCube();
+                    AddRightCube();
                     return;
                 }
             }
@@ -57,38 +52,44 @@ namespace Laser2D
             {
                 if (prob < 3 && left)
                 {
-                    Cube cube = new Cube();
-                    CubesLeft.Enqueue(cube);
-                    LastCubeTimeLeft = cube.TimeStamp;
-                    cube.CubeObject.transform.position = new UnityEngine.Vector3(5,0,0);
+                    AddLeftCube();
                 }
 
                 else if (right)
                 {
-                    Cube cube = new Cube();
-                    CubesRight.Enqueue(cube);
-                    LastCubeTimeRight = cube.TimeStamp;
+                    AddRightCube();
                 }
             }
         }
 
-        // TODO: en vez de estos check, revisar la posición del último cubo!
+        private void AddRightCube()
+        {
+            Cube cube = new Cube();
+            CubesRight.Enqueue(cube);
+            LastCubeRight = cube;
+
+        }
+
+        private void AddLeftCube()
+        {
+            Cube cube = new Cube();
+            cube.CubeObject.transform.position = new UnityEngine.Vector3(5, 0, 0);
+            CubesLeft.Enqueue(cube);
+            LastCubeLeft = cube;
+        }
+
         public bool CheckLastLeft()
         {
-            if (CubesLeft.Count == 0)
+            if (LastCubeLeft == null || LastCubeLeft.CubeObject == null || CubesRight.Count == 0)
                 return true;
-
-            long elapsedTime = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - LastCubeTimeLeft;
-            return elapsedTime * Speed >= CubeSize;
+            return LastCubeLeft.CubeObject.transform.position.z > 1.2f;
         }
 
         public bool CheckLastRight()
         {
-            if (CubesRight.Count == 0)
+            if (LastCubeRight == null || LastCubeRight.CubeObject == null || CubesRight.Count == 0)
                 return true;
-
-            long elapsedTime = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - LastCubeTimeRight;
-            return elapsedTime * Speed >= CubeSize;
+            return LastCubeRight.CubeObject.transform.position.z > 1.2f;
         }
 
         public void RemoveLeft()
@@ -104,7 +105,8 @@ namespace Laser2D
         }
 
 
-        public void IncreaseSpeed() {
+        public void IncreaseSpeed()
+        {
             Speed += Speed * 0.0002f;
         }
     }
