@@ -8,18 +8,15 @@ using System;
 
 public class Scene : MonoBehaviour
 {
-    public InputField SpeedN;
-    public InputField NickN;
-    public string name;
+    static public string playerName;
+    static public string initialSpeed;
     private void Start()
     {
-        SpeedN = (InputField)GameObject.Find("SpeedN").GetComponent<InputField>();
-        NickN = (InputField)GameObject.Find("NickN").GetComponent<InputField>();
-        name = NickN.text;
     }
     public void LoadScene()
     {
-        
+        playerName = GameObject.Find("Canvas/SpeedN/Text").GetComponent<Text>().text;
+        playerName = GameObject.Find("Canvas/NickN/Text").GetComponent<Text>().text;
         SceneManager.LoadScene(1);
     }
 }

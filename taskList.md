@@ -11,7 +11,7 @@
 
 #### Lógica (Parte2): versión jugable en 2D con las siguientes características
 
-* 3 vidas
+* ~~3 vidas~~
 * Niveles de dificultad:
     - ~~Cubos se pueden "destruir en cualquier dirección"~~
     - Cubos indican en qué dirección se pueden destruir.
@@ -23,9 +23,9 @@
 * Escenas: 
     -  ~~Inicio (selección de dificultad)~~
     -  ~~Juego~~
-    -  Perder y ganar,
+    -  Perder y ganar
     -  Tabla de puntuaciones
-* Interfaz: puntuación, 
+* ~~Interfaz: puntuación~~ 
 
 ### (11 junio - 15 junio)
 #### Kinect: detectar esqueleto:

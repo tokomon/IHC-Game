@@ -22,10 +22,11 @@ public class CubeScript : MonoBehaviour
     {
         float pos = transform.position.z;
         if (pos < 15.0f)
-            transform.Translate(0, 0, saber.laserLogic.Speed * Time.deltaTime);
+            transform.Translate(0, 0, saber.laserLogic.speed * Time.deltaTime);
         else
         { // Si su posición en mayor o igual que 15, ha pasado el límite y se debe descontar una vida.
             Destroy(gameObject);
+            saber.laserLogic.lives--;
             Debug.Log("CUBE PASSED");
             // TODO: descontar vida.
         }

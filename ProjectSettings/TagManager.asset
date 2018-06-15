@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - puntajr
   - score
+  - Name
   layers:
   - Default
   - TransparentFX

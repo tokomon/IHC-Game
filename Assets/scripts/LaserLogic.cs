@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class LaserLogic
 {
-    GameObject LastCubeLeft;
-    GameObject LastCubeRight;
-    public float CubeSize { get; }
-    public float Speed { get; set; }
+    GameObject lastCubeLeft;
+    GameObject lastCubeRight;
+    public float cubeSize { get; }
+    public float speed { get; set; }
     public int score;
+    public int lives;
+    public string playerName;
 
     public LaserLogic(float speed = 1.0f)
     {
-        CubeSize = 1.0f;
-        Speed = speed;
-
-        LastCubeLeft = LastCubeRight = null;
-
+        cubeSize = 1.0f;
+        this.speed = speed;
         score = 0;
+        lives = 9;
+
+        lastCubeLeft = lastCubeRight = null;
     }
 
     public void TryToAddCube()
@@ -30,7 +32,7 @@ public class LaserLogic
         bool right = CheckLastRight();
 
         int prob = rnd.Next(100);
-        // Try to add cubes in both queues.
+        // Añadir dos cubos a la vez.
         if (left && right)
         {
             int doubleProb = rnd.Next(100);
@@ -41,7 +43,7 @@ public class LaserLogic
                 return;
             }
         }
-        // Add a cube in one of the queues.
+        // Añadir un cubo.
         if (prob < 7) // 45
         {
             if (prob < 3 && left)
@@ -54,30 +56,31 @@ public class LaserLogic
 
     private void AddRightCube()
     {
-        LastCubeRight = Cube.CreateCube("right");
+        lastCubeRight = Cube.CreateCube("right");
     }
 
     private void AddLeftCube()
     {
-        LastCubeLeft = Cube.CreateCube("left");
+        lastCubeLeft = Cube.CreateCube("left");
     }
 
     public bool CheckLastLeft()
     {
-        if (LastCubeLeft == null)
+        if (lastCubeLeft == null)
             return true;
-        return LastCubeLeft.transform.position.z > 1.2f;
+        return lastCubeLeft.transform.position.z > 1.2f;
     }
 
     public bool CheckLastRight()
     {
-        if (LastCubeRight == null)
+        if (lastCubeRight == null)
             return true;
-        return LastCubeRight.transform.position.z > 1.2f;
+        return lastCubeRight.transform.position.z > 1.2f;
     }
 
     public void IncreaseSpeed()
     {
-        Speed += Speed * 0.002f;
+        // TODO: poner una velocidad límite
+        speed += speed * 0.002f;
     }
 }

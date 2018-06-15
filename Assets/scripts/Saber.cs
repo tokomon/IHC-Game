@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Saber : MonoBehaviour
 {
@@ -13,10 +14,22 @@ public class Saber : MonoBehaviour
 
     public LaserLogic laserLogic;
 
+    public Text scoreText;
+    public Text playerNameText;
+    public Text livesText;
+
     // Use this for initialization
     void Start()
     {
         laserLogic = new LaserLogic(5.0f);
+
+        playerNameText = GameObject.Find("/Canvas/PlayerName").GetComponent<Text>();
+        scoreText = GameObject.Find("/Canvas/Score").GetComponent<Text>();
+        livesText = GameObject.Find("/Canvas/Lives").GetComponent<Text>();
+
+        playerNameText.text = laserLogic.playerName = Scene.playerName;
+
+         
     }
 
     // Update is called once per frame
@@ -24,8 +37,18 @@ public class Saber : MonoBehaviour
     {
         laserLogic.TryToAddCube();
 
+        scoreText.text = laserLogic.score.ToString("0000000000");
+        livesText.text = laserLogic.lives.ToString("00");
+
         if (laserLogic.score > 10 && laserLogic.score % 10 == 0)
             laserLogic.IncreaseSpeed();
+
+        // Si se tienen 0 vidas se pierde:
+        if (laserLogic.lives <= 0)
+        {
+            // TODO: cambiar escena o hacer algo;
+            Time.timeScale = 0;
+        }
     }
 
     IEnumerator ExecuteAfterTime(float time)
