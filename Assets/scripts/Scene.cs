@@ -12,8 +12,14 @@ public class Scene : MonoBehaviour
     static public string initialSpeed;
     private void Start()
     {
-        playerName = GameObject.Find("Canvas/SpeedN/Text").GetComponent<Text>().text;
-        playerName = GameObject.Find("Canvas/NickN/Text").GetComponent<Text>().text;
+        try
+        {
+            initialSpeed = GameObject.Find("Canvas/SpeedN/Text").GetComponent<Text>().text;
+            playerName = GameObject.Find("Canvas/NickN/Text").GetComponent<Text>().text;
+        }
+        catch { }
+        
+
     }
     public void LoadScene(int i)
     {
