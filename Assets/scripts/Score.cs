@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Score : MonoBehaviour {
-    public TextMesh score = null;
     static public List<string> scoreList = new List<string>();
     public Text scoreText;
  
