@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Saber : MonoBehaviour
 {
+   
     public Texture3D texture;
     public Material matPisoE;
 
@@ -18,9 +20,11 @@ public class Saber : MonoBehaviour
     public Text playerNameText;
     public Text livesText;
 
+
     // Use this for initialization
     void Start()
     {
+
         laserLogic = new LaserLogic(5.0f);
 
         playerNameText = GameObject.Find("/Canvas/PlayerName").GetComponent<Text>();
@@ -48,6 +52,10 @@ public class Saber : MonoBehaviour
         {
             // TODO: cambiar escena o hacer algo;
             Time.timeScale = 0;
+
+            Score.scoreList.Add(playerNameText.text +" "+scoreText.text );
+            SceneManager.LoadScene(2);
+
         }
     }
 
