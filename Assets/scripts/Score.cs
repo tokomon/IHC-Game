@@ -47,7 +47,7 @@ public class Score : MonoBehaviour {
 
         for (int i = 0; i < scoreList.Count; i++)
         {
-            scoreText.GetComponent<Text>().text = scoreList[i] + '\n';
+            scoreText.GetComponent<Text>().text = scoreList[i];
         }
 
         ReadScoresFile();
@@ -86,7 +86,7 @@ public class Score : MonoBehaviour {
         using (System.IO.StreamWriter file =
             new System.IO.StreamWriter(path, true))
         {
-            file.WriteLine('\n' + playerName + ' ' + score.ToString());
+            file.WriteLine(playerName + ' ' + score.ToString());
         }
     }
 

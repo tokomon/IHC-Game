@@ -14,11 +14,7 @@ public class Scene : MonoBehaviour
     {
         Debug.Log(SceneManager.GetActiveScene().buildIndex);
         // Si la escena es: Pantalla perdiste
-        if (SceneManager.GetActiveScene().buildIndex == 2)
-        {
-            GameObject.Find("Canvas/PlayerName").GetComponent<Text>().text = "hola";
-            GameObject.Find("Canvas/Score").GetComponent<Text>().text = "000123123";
-        }
+
 
     }
     public void LoadScene(int i)
@@ -30,5 +26,10 @@ public class Scene : MonoBehaviour
             playerName = GameObject.Find("Canvas/NickN/Text").GetComponent<Text>().text;
         }
         SceneManager.LoadScene(i);
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            GameObject.Find("Canvas/PlayerName").GetComponent<Text>().text = "hola";
+            GameObject.Find("Canvas/Score").GetComponent<Text>().text = "000123123";
+        }
     }
 }
