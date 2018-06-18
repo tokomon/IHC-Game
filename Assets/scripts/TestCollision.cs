@@ -8,6 +8,9 @@ public class TestCollision : MonoBehaviour
     {
 
         other.GetComponent<Renderer>().material.color = Color.blue;
+        Debug.Log("ENTER COLOR");
+
+        SoundManagerScript.PlaySound("cube");
         Debug.Log("HAND ENTER");
     }
 

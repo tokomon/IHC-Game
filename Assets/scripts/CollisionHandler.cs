@@ -18,6 +18,8 @@ public class CollisionHandler : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GetComponent<Renderer>().material.color = Color.blue;
+        SoundManagerScript.PlaySound("cube");
+
 
         saber.laserLogic.score += 1;
     }

@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/scenes/Loser.unity
+    guid: db196984517869442afd54cab1d1a349
+  - enabled: 1
     path: Assets/scenes/Ranking.unity
     guid: df0443fc59a430e4f8a13198fdb0a852
   m_configObjects: {}

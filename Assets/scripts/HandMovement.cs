@@ -9,22 +9,82 @@ public class HandMovement : MonoBehaviour
 
     private Rigidbody rigBody;
 
+    public KinectWrapper.NuiSkeletonPositionIndex jointRight = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
+    public KinectWrapper.NuiSkeletonPositionIndex jointLeft = KinectWrapper.NuiSkeletonPositionIndex.HandLeft;
+
+
+    // joint position at the moment, in Kinect coordinates
+    public Vector3 outputPosition;
+
     // Use this for initialization
     void Start()
     {
         rigBody = GetComponent<Rigidbody>();
     }
 
+
     // Update is called once per frame
     void Update()
     {
-        if (this.name == "LeftHand")
-            LeftHandMovement();
-        else
-            RightHandMovement();
+
+        KinectManager manager = KinectManager.Instance;
+
+        if (manager && manager.IsInitialized())
+        {
+            if (manager.IsUserDetected())
+            {
+                uint userId = manager.GetPlayer1ID();
+
+                if (this.name == "RightHand")
+                {
+                    if (manager.IsJointTracked(userId, (int)jointRight))
+
+                    {
+                        // output the joint position for easy tracking
+                        Vector3 jointPos = manager.GetJointPosition(userId, (int)jointRight);
+                        outputPosition = jointPos;
+                        Debug.Log("Derecha: " + jointPos.ToString());
+
+                        /*  jointPos.x = gameObject.transform.position.x;
+                          jointPos.y = gameObject.transform.position.y;
+                          */
+                        jointPos.z = gameObject.transform.position.z;
+
+                        gameObject.transform.position = jointPos;
+
+
+                    }
+                }
+                else if (this.name == "LeftHand")
+                {
+                    if (manager.IsJointTracked(userId, (int)jointLeft))
+                    {
+                        // output the joint position for easy tracking
+                        Vector3 jointPos = manager.GetJointPosition(userId, (int)jointLeft);
+                        outputPosition = jointPos;
+                        Debug.Log("Izquierda: " + jointPos.ToString());
+                        jointPos.x += 5;// gameObject.transform.position.x;
+                                        /*   jointPos.y += gameObject.transform.position.y;
+                                           */
+                        jointPos.z = gameObject.transform.position.z;
+
+                        gameObject.transform.position = jointPos;
+
+                    }
+                }
+            }
+        } else
+        {
+            if (this.name == "RightHand")
+                RightHandMovement();
+            else
+                LeftHandMovement();
+        }
+            
     }
 
-    void LeftHandMovement()
+
+void LeftHandMovement()
     {
         Vector3 destination = this.transform.position;
         if (Input.GetKey(KeyCode.A))
