@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Score : MonoBehaviour {
+    static private string SCORE_FILE = @"\scores.sqlite";
     static public List<string> scoreList = new List<string>();
-    public GameObject scoreText;
+    public Text scoreText;
  
-    class ScoreWrapper
+    class ScoreWrapper : System.IComparable<ScoreWrapper>
     {
         public string name;
         public int score;
@@ -17,6 +18,18 @@ public class Score : MonoBehaviour {
             this.name = name;
             this.score = score;
         }
+
+        public int CompareTo(ScoreWrapper other)
+        {
+            if (score < other.score)
+                return 1;
+            else if (score == other.score)
+                return 0;
+            else
+                return -1;
+
+        }
+
         public static bool operator <(ScoreWrapper lhs, ScoreWrapper rhs)
         {
             return lhs.score < rhs.score;
@@ -29,7 +42,7 @@ public class Score : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        scoreText = GameObject.Find("textDinamic");//.GetComponent<Text>();
+        scoreText = GameObject.Find("textDinamic").GetComponent<Text>();
 
 
         for (int i = 0; i < scoreList.Count; i++)
@@ -37,7 +50,7 @@ public class Score : MonoBehaviour {
             scoreText.GetComponent<Text>().text = scoreList[i] + '\n';
         }
 
-        readScoresFile();
+        ReadScoresFile();
     }
 	
 	// Update is called once per frame
@@ -45,8 +58,8 @@ public class Score : MonoBehaviour {
 		
 	}
 
-    public void readScoresFile() {
-        string path = Application.dataPath + @"\scores.sqlite";
+    public void ReadScoresFile() {
+        string path = Application.dataPath + SCORE_FILE;
         string[] lines = System.IO.File.ReadAllLines(path);
         List<ScoreWrapper> dataList = new List<ScoreWrapper>();
 
@@ -60,10 +73,21 @@ public class Score : MonoBehaviour {
         foreach (ScoreWrapper score in dataList)
         {
             string scoreFormat = string.Format("{0,-16}{1}", score.name, score.score.ToString("0000000000"));
-            Debug.Log(scoreFormat);
+            //scoreList.Add(scoreFormat);
+            scoreText.text += scoreFormat + '\n';
         }
 
         // Cuando hay un nuevo score ponerlo en la lista y luego pasarlo al archivo.
+    }
+
+    static public void WriteScoreFile(string playerName, int score)
+    {
+        string path = Application.dataPath + SCORE_FILE;
+        using (System.IO.StreamWriter file =
+            new System.IO.StreamWriter(path, true))
+        {
+            file.WriteLine('\n' + playerName + ' ' + score.ToString());
+        }
     }
 
 }

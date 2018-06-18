@@ -31,6 +31,9 @@ public class Saber : MonoBehaviour
         livesText = GameObject.Find("/Canvas/Lives").GetComponent<Text>();
 
         playerNameText.text = laserLogic.playerName = Scene.playerName;
+        Debug.Log("NAME: "+ laserLogic.playerName);
+
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
@@ -47,10 +50,11 @@ public class Saber : MonoBehaviour
         // Si se tienen 0 vidas se pierde:
         if (laserLogic.lives <= 0)
         {
-            // TODO: cambiar escena o hacer algo;
+            // TODO: esto hace que luego se pueda seguir jugando?
             Time.timeScale = 0;
 
-            Score.scoreList.Add(playerNameText.text +" "+scoreText.text );
+            //Score.scoreList.Add(playerNameText.text +" "+scoreText.text );
+            Score.WriteScoreFile(laserLogic.playerName, laserLogic.score);
             SceneManager.LoadScene(2);
 
         }
