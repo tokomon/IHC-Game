@@ -26,10 +26,10 @@ public class Scene : MonoBehaviour
             playerName = GameObject.Find("Canvas/NickN/Text").GetComponent<Text>().text;
         }
         SceneManager.LoadScene(i);
-        if (SceneManager.GetActiveScene().buildIndex == 2)
-        {
-            GameObject.Find("Canvas/PlayerName").GetComponent<Text>().text = "hola";
-            GameObject.Find("Canvas/Score").GetComponent<Text>().text = "000123123";
-        }
+        // if (SceneManager.GetActiveScene().buildIndex == 2)
+        // {
+            // GameObject.Find("Loser/Canvas/PlayerName").GetComponent<Text>().text = "hola";
+            // GameObject.Find("Loser/Canvas/Score").GetComponent<Text>().text = "000123123";
+        // }
     }
 }
