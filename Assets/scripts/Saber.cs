@@ -24,7 +24,6 @@ public class Saber : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         laserLogic = new LaserLogic(5.0f);
 
         playerNameText = GameObject.Find("/Canvas/PlayerName").GetComponent<Text>();
@@ -32,8 +31,6 @@ public class Saber : MonoBehaviour
         livesText = GameObject.Find("/Canvas/Lives").GetComponent<Text>();
 
         playerNameText.text = laserLogic.playerName = Scene.playerName;
-
-         
     }
 
     // Update is called once per frame
