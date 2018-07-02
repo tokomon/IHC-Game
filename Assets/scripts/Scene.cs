@@ -22,7 +22,7 @@ public class Scene : MonoBehaviour
         // Si la escena es: Pantalla inicio 
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            initialSpeed = GameObject.Find("Canvas/SpeedN/Text").GetComponent<Text>().text;
+       //     initialSpeed = GameObject.Find("Canvas/SpeedN/Text").GetComponent<Text>().text;
             playerName = GameObject.Find("Canvas/NickN/Text").GetComponent<Text>().text;
         }
         SceneManager.LoadScene(i);

@@ -26,7 +26,7 @@ public class CubeScript : MonoBehaviour
         else
         { // Si su posición en mayor o igual que 15, ha pasado el límite y se debe descontar una vida.
             Destroy(gameObject);
-            //saber.laserLogic.lives--;
+            saber.laserLogic.lives--;
             // Debug.Log("CUBE PASSED");
             // TODO: descontar vida.
         }

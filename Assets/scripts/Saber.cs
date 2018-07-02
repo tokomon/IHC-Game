@@ -20,6 +20,8 @@ public class Saber : MonoBehaviour
     public Text playerNameText;
     public Text livesText;
 
+    public static string score;
+
 
     // Use this for initialization
     void Start()
@@ -43,6 +45,7 @@ public class Saber : MonoBehaviour
         //laserLogic.TryToAddCube();
 
         scoreText.text = laserLogic.score.ToString("0000000000");
+        score = laserLogic.score.ToString();
         livesText.text = laserLogic.lives.ToString("00");
 
         //if (laserLogic.score > 10 && laserLogic.score % 10 == 0)

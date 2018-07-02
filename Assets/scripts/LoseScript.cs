@@ -9,8 +9,8 @@ public class LoseScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-       // GameObject.Find("PlayerName").GetComponent<Text>().text = Saber.laserLogic.playerName;
-       // GameObject.Find("Score").GetComponent<Text>().text = Saber.laserLogic.score.ToString("0000000000");
+        GameObject.Find("PlayerName").GetComponent<Text>().text = Scene.playerName;// Saber.laserLogic.playerName;
+        GameObject.Find("Score").GetComponent<Text>().text = Saber.score;
     }
 
     // Update is called once per frame
