@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Cube
 {
-    public static GameObject CreateCube(String side)
+    public static GameObject CreateCube(int row)
     {
         char direction;
         System.Random rnd = new System.Random();
@@ -29,8 +29,14 @@ public class Cube
         newCube.AddComponent<CubeScript>();
 
         // Si el cubo es del lado izquierdo, entonces se posiciona ahí 
-        if (side.Equals("left"))
+        if (row == 0)
             newCube.transform.position = new Vector3(5, 0, 0);
+        else if (row == 1)
+            newCube.transform.position = new Vector3(3.33333f, 0, 0);
+        else if (row == 2)
+            newCube.transform.position = new Vector3(1.66666f, 0, 0);
+        else
+            newCube.transform.position = new Vector3(0, 0, 0);
 
         return newCube;
     }

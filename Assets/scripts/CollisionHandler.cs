@@ -17,8 +17,12 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        string otherName = other.GetComponent<Collider>().gameObject.name;
+        if (otherName != "LeftHand" && otherName != "RightHand")
+            return;
+
         GetComponent<Renderer>().material.color = Color.blue;
-        SoundManagerScript.PlaySound("cube");
+        //SoundManagerScript.PlaySound("cube");
 
 
         saber.laserLogic.score += 1;

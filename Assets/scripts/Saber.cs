@@ -24,7 +24,7 @@ public class Saber : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        laserLogic = new LaserLogic(5.0f);
+        laserLogic = new LaserLogic(8.5f);
 
         playerNameText = GameObject.Find("/Canvas/PlayerName").GetComponent<Text>();
         scoreText = GameObject.Find("/Canvas/Score").GetComponent<Text>();
@@ -39,13 +39,13 @@ public class Saber : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        laserLogic.TryToAddCube();
+        //laserLogic.TryToAddCube();
 
         scoreText.text = laserLogic.score.ToString("0000000000");
         livesText.text = laserLogic.lives.ToString("00");
 
-        if (laserLogic.score > 10 && laserLogic.score % 10 == 0)
-            laserLogic.IncreaseSpeed();
+        //if (laserLogic.score > 10 && laserLogic.score % 10 == 0)
+        //    laserLogic.IncreaseSpeed();
 
         // Si se tienen 0 vidas se pierde:
         if (laserLogic.lives <= 0)

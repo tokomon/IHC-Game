@@ -56,12 +56,12 @@ public class LaserLogic
 
     private void AddRightCube()
     {
-        lastCubeRight = Cube.CreateCube("right");
+        lastCubeRight = Cube.CreateCube(3);
     }
 
     private void AddLeftCube()
     {
-        lastCubeLeft = Cube.CreateCube("left");
+        lastCubeLeft = Cube.CreateCube(0);
     }
 
     public bool CheckLastLeft()
