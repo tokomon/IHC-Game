@@ -22,6 +22,12 @@ public class CollisionHandler : MonoBehaviour
             return;
 
         GetComponent<Renderer>().material.color = Color.blue;
+
+        Vector3 destination = this.transform.position;
+        destination.y-=5;
+        
+        transform.position = Vector3.Lerp(transform.position, destination, 5f * Time.deltaTime);
+    
         //SoundManagerScript.PlaySound("cube");
 
 
@@ -30,6 +36,13 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f);
+
+        Vector3 destination = this.transform.position;
+        destination.y-=1;
+
+        transform.position = Vector3.Lerp(transform.position, destination, 5f * Time.deltaTime);
+
         Destroy(gameObject);
     }
 }

@@ -21,8 +21,9 @@ public class Cube
 
         // Create 3d object
         GameObject newCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        newCube.GetComponent<Renderer>().material = Saber.matPared;
 
-        newCube.GetComponent<Renderer>().material.color = Color.red;//.material = Resources.Load("Assets/Materials/down") as Material;
+//        newCube.GetComponent<Renderer>().material.color = Color.red;//.material = Resources.Load("Assets/Materials/down") as Material;
         newCube.AddComponent<Rigidbody>().useGravity = false;
         newCube.GetComponent<BoxCollider>().isTrigger = true;
         newCube.AddComponent<CollisionHandler>();

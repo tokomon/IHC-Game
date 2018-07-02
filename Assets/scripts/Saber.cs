@@ -25,6 +25,7 @@ public class Saber : MonoBehaviour
     void Start()
     {
         laserLogic = new LaserLogic(8.5f);
+        matPared = matPisoE;
 
         playerNameText = GameObject.Find("/Canvas/PlayerName").GetComponent<Text>();
         scoreText = GameObject.Find("/Canvas/Score").GetComponent<Text>();
